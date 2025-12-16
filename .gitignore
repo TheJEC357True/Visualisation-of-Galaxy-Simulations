@@ -1,0 +1,28 @@
+# --- Unity Standard Ignores ---
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+*.pidb.meta
+*.pdb
+*.pidb
+
+# --- Python Standard Ignores ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+venv/
+
+# --- PROJECT SPECIFIC DATA (Crucial!) ---
+# Ignore the raw simulation folders
+output_*/
+
+# Ignore the processed binary files for Unity
+*.bytes
+*.bin
+
+# Ignore large textures if they are just generated data
+Assets/StreamingAssets/*.bytes
