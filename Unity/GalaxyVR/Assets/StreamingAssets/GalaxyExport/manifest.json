@@ -1,0 +1,92 @@
+{
+    "gas": {
+        "count": 1945559,
+        "position_file": "gas/positions.bin",
+        "attributes": [
+            {
+                "name": "temp",
+                "file": "gas/temp.bin",
+                "min": -0.2905707359313965,
+                "max": 6.7409749031066895,
+                "is_log": true,
+                "units": "K"
+            },
+            {
+                "name": "density",
+                "file": "gas/density.bin",
+                "min": -31.76392936706543,
+                "max": -20.346603393554688,
+                "is_log": true,
+                "units": "g cm^-3"
+            },
+            {
+                "name": "mass",
+                "file": "gas/mass.bin",
+                "min": -3.573668956756592,
+                "max": 5.566015243530273,
+                "is_log": true,
+                "units": "Msol"
+            },
+            {
+                "name": "oxygen",
+                "file": "gas/oxygen.bin",
+                "min": 3.7873228393436875e-06,
+                "max": 0.04545268788933754,
+                "is_log": false,
+                "units": "dimensionless"
+            },
+            {
+                "name": "smooth",
+                "file": "gas/smooth.bin",
+                "min": 0.017688540741801262,
+                "max": 9.056532859802246,
+                "is_log": false,
+                "units": "kpc"
+            }
+        ]
+    },
+    "star": {
+        "count": 765428,
+        "position_file": "star/positions.bin",
+        "attributes": [
+            {
+                "name": "mass",
+                "file": "star/mass.bin",
+                "min": 3.6129908561706543,
+                "max": 6.205761432647705,
+                "is_log": true,
+                "units": "Msol"
+            },
+            {
+                "name": "oxygen",
+                "file": "star/oxygen.bin",
+                "min": 4.0161756942325155e-07,
+                "max": 0.04851296916604042,
+                "is_log": false,
+                "units": "dimensionless"
+            },
+            {
+                "name": "age",
+                "file": "star/age.bin",
+                "min": 0.00010620134708005935,
+                "max": 6.274336814880371,
+                "is_log": false,
+                "units": "Gyr"
+            }
+        ]
+    },
+    "dm": {
+        "count": 20056,
+        "position_file": "dm/positions.bin",
+        "attributes": [
+            {
+                "name": "mass",
+                "file": "dm/mass.bin",
+                "min": 5.302901268005371,
+                "max": 8.012171745300293,
+                "is_log": true,
+                "units": "Msol"
+            }
+        ]
+    }
+}
