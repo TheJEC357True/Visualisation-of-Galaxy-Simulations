@@ -16,7 +16,7 @@ __pycache__/
 .ipynb_checkpoints/
 venv/
 
-# --- PROJECT SPECIFIC DATA (Crucial!) ---
+# --- PROJECT SPECIFIC DATA ---
 # Ignore the raw simulation folders
 output_*/
 
