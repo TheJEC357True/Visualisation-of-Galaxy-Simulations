@@ -1,0 +1,95 @@
+{
+    "version": 1,
+    "name": "GalaxyControls",
+    "maps": [
+        {
+            "name": "Debug",
+            "id": "eb37be93-6098-4149-b004-7fb436709a71",
+            "actions": [
+                {
+                    "name": "SwitchTemp",
+                    "type": "Button",
+                    "id": "c34488a8-2709-4c74-a90c-820accbad4fc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchDensity",
+                    "type": "Button",
+                    "id": "79970b16-01c2-4dd7-8e09-060e051c6f77",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchMass",
+                    "type": "Button",
+                    "id": "b99905b4-f998-403a-b03e-661c7d4670ca",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GasSmooth",
+                    "type": "Button",
+                    "id": "49ef2bb7-1a95-449b-90c2-1fdd5ba91949",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8517394c-3755-48b1-8718-33c20c472c79",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchTemp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2cefb148-0e14-4ae7-8010-14ed38bf88f7",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchDensity",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff944319-8b9a-4f94-8b2d-50fee8b17aa5",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMass",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c670114c-27f9-418b-a539-72e3da91847f",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GasSmooth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

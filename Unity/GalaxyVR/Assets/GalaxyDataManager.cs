@@ -1,6 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System.IO;
 using UnityEngine.VFX;
 
@@ -31,6 +32,8 @@ public class AttributeManifest
     public string units;
 }
 
+
+
 public class GalaxyDataManager : MonoBehaviour
 {
     [Header("Configuration")]
@@ -43,6 +46,40 @@ public class GalaxyDataManager : MonoBehaviour
 
     private GalaxyManifest _manifest;
     private string _basePath;
+
+    // Dictionaries to hold preloaded attributes per family
+    private Dictionary<string, Dictionary<string, Texture2D>> _attributeTextures = new Dictionary<string, Dictionary<string, Texture2D>>();
+    private Dictionary<string, Dictionary<string, AttributeManifest>> _attributeManifests = new Dictionary<string, Dictionary<string, AttributeManifest>>();
+
+    public enum VisualChannel
+    {
+        Color,
+        Size,
+        Alpha,
+        Emission,       // brightness / HDR bloom strength
+        // HueShift,    // optional later
+        // Custom1,     // room for future ideas
+    }
+
+    private GalaxyControls controls; 
+
+    void Awake()
+    {
+        controls = new GalaxyControls();
+        controls.Debug.SwitchTemp.performed += ctx => SwitchMapping("gas", "temp", VisualChannel.Color, gasVisual);
+        controls.Debug.SwitchDensity.performed += ctx => SwitchMapping("gas", "density", VisualChannel.Color, gasVisual);
+        controls.Debug.SwitchMass.performed += ctx => SwitchMapping("gas", "mass", VisualChannel.Size, gasVisual);
+        controls.Debug.GasSmooth.performed += ctx => SwitchMapping("gas", "smooth", VisualChannel.Emission, gasVisual);
+    }
+
+    void OnEnable()
+    {
+        controls.Enable();
+    }
+    void OnDisable()
+    {
+        controls.Disable();
+    }
 
     void Start()
     {
@@ -78,8 +115,7 @@ public class GalaxyDataManager : MonoBehaviour
         Debug.Log($"Loading {familyName}: {family.count} particles...");
 
         // 1. Set Particle Count in VFX Graph
-        //vfx.SetInt("ParticleCount", family.count);
-        vfx.SetInt("ParticleCount", 1000); // TEMP: Limit to 1000 for now to avoid lag while testing
+        vfx.SetInt("ParticleCount", family.count);
 
         // 2. Load Positions 
         // We pass '4' because we padded the Python export (X, Y, Z, W)
@@ -87,16 +123,90 @@ public class GalaxyDataManager : MonoBehaviour
         Texture2D posTex = LoadBinaryToTexture(posPath, family.count, 4);
 
         if (posTex != null)
-            vfx.SetTexture("PositionMap", posTex);
-
-        // 3. Load Default Attribute (The Skin)
-        // Loads the first attribute in the list (usually Temperature or Mass)
-        if (family.attributes.Count > 0)
         {
-            LoadAttribute(family.attributes[0], familyName, vfx);
+            vfx.SetTexture("PositionMap", posTex);
+            vfx.SetInt("PositionMapWidth", posTex.width);
+            Debug.Log($"[Success] {familyName} PositionMap: {posTex.width}x{posTex.height}");
+        }
+        // 3. Preload ALL Attributes
+        _attributeTextures[familyName] = new Dictionary<string, Texture2D>();
+        _attributeManifests[familyName] = new Dictionary<string, AttributeManifest>();
+        foreach (var attr in family.attributes)
+        {
+            string attrPath = Path.Combine(_basePath, attr.file);
+            Texture2D attrTex = LoadBinaryToTexture(attrPath, family.count, 1); // RFloat for attributes
+            if (attrTex != null)
+            {
+                _attributeTextures[familyName][attr.name] = attrTex;
+                _attributeManifests[familyName][attr.name] = attr;
+                Debug.Log($"[Preloaded] {familyName} {attr.name}: {attrTex.width}x{attrTex.height}");
+            }
+        }
+
+        // 4. Set Default Attributes
+        if (family.attributes.Count > 2)
+        {
+            SwitchMapping(familyName, family.attributes[0].name, VisualChannel.Color, vfx);
+            SwitchMapping(familyName, family.attributes[1].name, VisualChannel.Size, vfx);
+            SwitchMapping(familyName, family.attributes[2].name, VisualChannel.Alpha, vfx);
+        }
+        else if (family.attributes.Count > 1)
+        {
+            SwitchMapping(familyName, family.attributes[0].name, VisualChannel.Color, vfx);
+            SwitchMapping(familyName, family.attributes[1].name, VisualChannel.Size, vfx);
+        }
+        else if (family.attributes.Count > 0)
+        {
+            SwitchMapping(familyName, family.attributes[0].name, VisualChannel.Color, vfx);
         }
 
         vfx.Play();
+    }
+
+    public void SwitchMapping(string familyName, string attrName, VisualChannel channel, VisualEffect vfx)
+    {
+        if (!_attributeTextures.TryGetValue(familyName, out var attrs) ||
+            !attrs.TryGetValue(attrName, out var tex))
+        {
+            Debug.LogError($"Cannot switch: {attrName} not found for {familyName}");
+            return;
+        }
+
+        var manifest = _attributeManifests[familyName][attrName];
+
+        switch (channel)
+        {
+            case VisualChannel.Color:
+                vfx.SetTexture("ColorMap", tex);
+                vfx.SetFloat("ColorMinVal", manifest.min);
+                vfx.SetFloat("ColorMaxVal", manifest.max);
+                break;
+
+            case VisualChannel.Size:
+                vfx.SetTexture("SizeMap", tex);
+                vfx.SetFloat("SizeMinVal", manifest.min);
+                vfx.SetFloat("SizeMaxVal", manifest.max);
+                break;
+
+            case VisualChannel.Alpha:
+                vfx.SetTexture("AlphaMap", tex);
+                vfx.SetFloat("AlphaMinVal", manifest.min);
+                vfx.SetFloat("AlphaMaxVal", manifest.max);
+                break;
+
+            case VisualChannel.Emission:
+                vfx.SetTexture("EmissionMap", tex);
+                vfx.SetFloat("EmissionMinVal", manifest.min);
+                vfx.SetFloat("EmissionMaxVal", manifest.max);
+                break;
+
+            default:
+                Debug.Log($"Channel [{nameof(channel)}] does not exist. Mapping change FAILED.");
+                return;
+        }
+
+        Debug.Log($"[{familyName}] {attrName} → {channel}  (min:{manifest.min:F2}, max:{manifest.max:F2})");
+        return;
     }
 
     public void LoadAttribute(AttributeManifest attr, string familyName, VisualEffect vfx)
