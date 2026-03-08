@@ -66,10 +66,18 @@ public class GalaxyDataManager : MonoBehaviour
     void Awake()
     {
         controls = new GalaxyControls();
-        controls.Debug.SwitchTemp.performed += ctx => SwitchMapping("gas", "temp", VisualChannel.Color, gasVisual);
-        controls.Debug.SwitchDensity.performed += ctx => SwitchMapping("gas", "density", VisualChannel.Color, gasVisual);
-        controls.Debug.SwitchMass.performed += ctx => SwitchMapping("gas", "mass", VisualChannel.Size, gasVisual);
-        controls.Debug.GasSmooth.performed += ctx => SwitchMapping("gas", "smooth", VisualChannel.Emission, gasVisual);
+        controls.Debug.StandardMappings.performed += ctx =>
+        {
+            SwitchMapping("gas", "smooth", VisualChannel.Size, gasVisual);
+            SwitchMapping("gas", "temp", VisualChannel.Color, gasVisual);
+            SwitchMapping("gas", "density", VisualChannel.Alpha, gasVisual);
+        };
+        controls.Debug.ReturnToDefaults.performed += ctx =>
+        {
+            SwitchMapping("gas", "mass", VisualChannel.Size, gasVisual);
+            SwitchMapping("gas", "temp", VisualChannel.Color, gasVisual);
+            SwitchMapping("gas", "density", VisualChannel.Alpha, gasVisual);
+        };
     }
 
     void OnEnable()
@@ -126,6 +134,8 @@ public class GalaxyDataManager : MonoBehaviour
         {
             vfx.SetTexture("PositionMap", posTex);
             vfx.SetInt("PositionMapWidth", posTex.width);
+
+            Debug.Log($"ParticleCount set to = {family.count}");
             Debug.Log($"[Success] {familyName} PositionMap: {posTex.width}x{posTex.height}");
         }
         // 3. Preload ALL Attributes
@@ -173,6 +183,22 @@ public class GalaxyDataManager : MonoBehaviour
         }
 
         var manifest = _attributeManifests[familyName][attrName];
+
+        if (familyName == "gas")
+        {
+            vfx.SetFloat("BaseSize", 1f);
+            vfx.SetFloat("BaseOpacity", 1f);
+        }
+        else if (familyName == "star")
+        {
+            vfx.SetFloat("BaseSize", 4f);
+            vfx.SetFloat("BaseOpacity", 3f);
+        }
+        else if (familyName == "dm")
+        {
+            vfx.SetFloat("BaseSize", 20f);
+            vfx.SetFloat("BaseOpacity", 0.05f);
+        }
 
         switch (channel)
         {

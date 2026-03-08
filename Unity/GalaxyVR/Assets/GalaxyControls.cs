@@ -93,7 +93,7 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
             ""id"": ""eb37be93-6098-4149-b004-7fb436709a71"",
             ""actions"": [
                 {
-                    ""name"": ""SwitchTemp"",
+                    ""name"": ""StandardMappings"",
                     ""type"": ""Button"",
                     ""id"": ""c34488a8-2709-4c74-a90c-820accbad4fc"",
                     ""expectedControlType"": """",
@@ -102,25 +102,7 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwitchDensity"",
-                    ""type"": ""Button"",
-                    ""id"": ""79970b16-01c2-4dd7-8e09-060e051c6f77"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SwitchMass"",
-                    ""type"": ""Button"",
-                    ""id"": ""b99905b4-f998-403a-b03e-661c7d4670ca"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""GasSmooth"",
+                    ""name"": ""ReturnToDefaults"",
                     ""type"": ""Button"",
                     ""id"": ""49ef2bb7-1a95-449b-90c2-1fdd5ba91949"",
                     ""expectedControlType"": """",
@@ -137,40 +119,18 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwitchTemp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""2cefb148-0e14-4ae7-8010-14ed38bf88f7"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchDensity"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ff944319-8b9a-4f94-8b2d-50fee8b17aa5"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchMass"",
+                    ""action"": ""StandardMappings"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""c670114c-27f9-418b-a539-72e3da91847f"",
-                    ""path"": ""<Keyboard>/0"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""GasSmooth"",
+                    ""action"": ""ReturnToDefaults"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -181,10 +141,8 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
 }");
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
-        m_Debug_SwitchTemp = m_Debug.FindAction("SwitchTemp", throwIfNotFound: true);
-        m_Debug_SwitchDensity = m_Debug.FindAction("SwitchDensity", throwIfNotFound: true);
-        m_Debug_SwitchMass = m_Debug.FindAction("SwitchMass", throwIfNotFound: true);
-        m_Debug_GasSmooth = m_Debug.FindAction("GasSmooth", throwIfNotFound: true);
+        m_Debug_StandardMappings = m_Debug.FindAction("StandardMappings", throwIfNotFound: true);
+        m_Debug_ReturnToDefaults = m_Debug.FindAction("ReturnToDefaults", throwIfNotFound: true);
     }
 
     ~@GalaxyControls()
@@ -265,10 +223,8 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
     // Debug
     private readonly InputActionMap m_Debug;
     private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
-    private readonly InputAction m_Debug_SwitchTemp;
-    private readonly InputAction m_Debug_SwitchDensity;
-    private readonly InputAction m_Debug_SwitchMass;
-    private readonly InputAction m_Debug_GasSmooth;
+    private readonly InputAction m_Debug_StandardMappings;
+    private readonly InputAction m_Debug_ReturnToDefaults;
     /// <summary>
     /// Provides access to input actions defined in input action map "Debug".
     /// </summary>
@@ -281,21 +237,13 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
         /// </summary>
         public DebugActions(@GalaxyControls wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Debug/SwitchTemp".
+        /// Provides access to the underlying input action "Debug/StandardMappings".
         /// </summary>
-        public InputAction @SwitchTemp => m_Wrapper.m_Debug_SwitchTemp;
+        public InputAction @StandardMappings => m_Wrapper.m_Debug_StandardMappings;
         /// <summary>
-        /// Provides access to the underlying input action "Debug/SwitchDensity".
+        /// Provides access to the underlying input action "Debug/ReturnToDefaults".
         /// </summary>
-        public InputAction @SwitchDensity => m_Wrapper.m_Debug_SwitchDensity;
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/SwitchMass".
-        /// </summary>
-        public InputAction @SwitchMass => m_Wrapper.m_Debug_SwitchMass;
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/GasSmooth".
-        /// </summary>
-        public InputAction @GasSmooth => m_Wrapper.m_Debug_GasSmooth;
+        public InputAction @ReturnToDefaults => m_Wrapper.m_Debug_ReturnToDefaults;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -322,18 +270,12 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
-            @SwitchTemp.started += instance.OnSwitchTemp;
-            @SwitchTemp.performed += instance.OnSwitchTemp;
-            @SwitchTemp.canceled += instance.OnSwitchTemp;
-            @SwitchDensity.started += instance.OnSwitchDensity;
-            @SwitchDensity.performed += instance.OnSwitchDensity;
-            @SwitchDensity.canceled += instance.OnSwitchDensity;
-            @SwitchMass.started += instance.OnSwitchMass;
-            @SwitchMass.performed += instance.OnSwitchMass;
-            @SwitchMass.canceled += instance.OnSwitchMass;
-            @GasSmooth.started += instance.OnGasSmooth;
-            @GasSmooth.performed += instance.OnGasSmooth;
-            @GasSmooth.canceled += instance.OnGasSmooth;
+            @StandardMappings.started += instance.OnStandardMappings;
+            @StandardMappings.performed += instance.OnStandardMappings;
+            @StandardMappings.canceled += instance.OnStandardMappings;
+            @ReturnToDefaults.started += instance.OnReturnToDefaults;
+            @ReturnToDefaults.performed += instance.OnReturnToDefaults;
+            @ReturnToDefaults.canceled += instance.OnReturnToDefaults;
         }
 
         /// <summary>
@@ -345,18 +287,12 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
         /// <seealso cref="DebugActions" />
         private void UnregisterCallbacks(IDebugActions instance)
         {
-            @SwitchTemp.started -= instance.OnSwitchTemp;
-            @SwitchTemp.performed -= instance.OnSwitchTemp;
-            @SwitchTemp.canceled -= instance.OnSwitchTemp;
-            @SwitchDensity.started -= instance.OnSwitchDensity;
-            @SwitchDensity.performed -= instance.OnSwitchDensity;
-            @SwitchDensity.canceled -= instance.OnSwitchDensity;
-            @SwitchMass.started -= instance.OnSwitchMass;
-            @SwitchMass.performed -= instance.OnSwitchMass;
-            @SwitchMass.canceled -= instance.OnSwitchMass;
-            @GasSmooth.started -= instance.OnGasSmooth;
-            @GasSmooth.performed -= instance.OnGasSmooth;
-            @GasSmooth.canceled -= instance.OnGasSmooth;
+            @StandardMappings.started -= instance.OnStandardMappings;
+            @StandardMappings.performed -= instance.OnStandardMappings;
+            @StandardMappings.canceled -= instance.OnStandardMappings;
+            @ReturnToDefaults.started -= instance.OnReturnToDefaults;
+            @ReturnToDefaults.performed -= instance.OnReturnToDefaults;
+            @ReturnToDefaults.canceled -= instance.OnReturnToDefaults;
         }
 
         /// <summary>
@@ -398,32 +334,18 @@ public partial class @GalaxyControls: IInputActionCollection2, IDisposable
     public interface IDebugActions
     {
         /// <summary>
-        /// Method invoked when associated input action "SwitchTemp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "StandardMappings" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSwitchTemp(InputAction.CallbackContext context);
+        void OnStandardMappings(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "SwitchDensity" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ReturnToDefaults" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSwitchDensity(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "SwitchMass" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSwitchMass(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "GasSmooth" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnGasSmooth(InputAction.CallbackContext context);
+        void OnReturnToDefaults(InputAction.CallbackContext context);
     }
 }
